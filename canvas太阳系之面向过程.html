@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>canvas太阳系之面向过程</title>
+    <style type="text/css">
+    *{
+        padding:0;
+        margin:0;
+    }
+    body{
+        background: black;
+    }
+    #canvas{
+        margin:50px;
+    }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="1000" height="1000"></canvas>
+    <script type="text/javascript">
+        //设置环境
+        var canvas=document.getElementById("canvas").getContext("2d");//设置为2d环境
+        //canvas.strokeStyle="red";
+        getPathWay();
+
+        function move(){
+            canvas.clearRect(0,0,1000,1000);//清楚画布，会发现轨道不见了
+            getPathWay();
+            getStar(0,0,30,0);
+            getStar(0,-50,10,87.70);
+            getStar(0,-100,10,224.701);
+            getStar(0,-150,10,365.2422);
+            getStar(0,-200,10,686.98);
+            getStar(0,-250,10,4332.589);
+            getStar(0,-300,10,10759.5);
+            getStar(0,-350,10,30799.095);
+            getStar(0,-400,10,62152);
+        }
+
+        setInterval(move,100);//10秒钟时间
+
+        //星球函数
+        var time=0;
+        function getStar(x,y,r,c){//(坐标x,y,半径r,角度c)
+            canvas.save();//保存以前的
+            canvas.translate(500,500);//设置坐标点
+            canvas.rotate(time*(360/c)*Math.PI/180);//旋转角度
+            canvas.beginPath();//开始路径
+            canvas.arc(x,y,r,0,360,false);
+            canvas.closePath();//结束路径
+
+            //线性渐变 linear
+            var color=canvas.createRadialGradient(x,y,0,x,y,r);//颜色渐变，内圆圆心(x,y,r)，外圆圆心(x,y,r)
+            //添加颜色--红色渐变为蓝色
+            color.addColorStop(0,getColor());//渐变开始点和颜色
+            color.addColorStop(1,getColor());//渐变结束点和颜色
+            canvas.fillStyle=color; //将渐变颜色复制给填充画笔
+            canvas.fill();
+            time++;
+            canvas.restore();//释放之前画布的内容
+            //canvas.stroke();
+        }
+
+        //轨道函数
+        function getPathWay(){
+            for (var i = 0; i <9; i++) {
+                canvas.strokeStyle=getColor();
+                canvas.beginPath();//开始路径
+                canvas.arc(500,500,(i+1)*50,0,360,false);//位置偏移，设置曲线的路径，(圆心坐标x,y，半径r，从0度绘制到360度，逆时针)
+                canvas.closePath();//结束路径
+                canvas.stroke();
+            }
+        }
+
+         //随机函数生成随机颜色
+        function getColor(){
+            var aColor=[0,1,2,3,4,5,6,7,8,9,'a','b','c','d','e','f'];
+            var colors="";
+            for (var i = 0; i<6; i++) {
+                var num=Math.ceil(Math.random()*15);//0-15之间的16个随机数 ,ceil()函数是向上取整；floor()函数是向下取整
+                colors+=aColor[num];
+                //alert(colors);
+                if(i==5){
+                    return "#"+colors;
+                     //console.log(colors);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
