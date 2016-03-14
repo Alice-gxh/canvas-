@@ -25,8 +25,8 @@
         getPathWay();
 
         function move(){
-            canvas.clearRect(0,0,1000,1000);//清楚画布，会发现轨道不见了
-            getPathWay();
+            canvas.clearRect(0,0,1000,1000);//清除画布，会发现轨道不见了
+            getPathWay(); //轨道
             getStar(0,0,30,0);
             getStar(0,-50,10,87.70);
             getStar(0,-100,10,224.701);
@@ -80,10 +80,8 @@
             for (var i = 0; i<6; i++) {
                 var num=Math.ceil(Math.random()*15);//0-15之间的16个随机数 ,ceil()函数是向上取整；floor()函数是向下取整
                 colors+=aColor[num];
-                //alert(colors);
                 if(i==5){
                     return "#"+colors;
-                     //console.log(colors);
                 }
             }
         }
